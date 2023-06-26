@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Account\Exception;
+namespace PhpFinance\DoubleEntry\Domain\Account\Exception;
 
 use RuntimeException;
 

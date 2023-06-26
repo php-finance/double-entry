@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Account\Exception;
+namespace PhpFinance\DoubleEntry\Domain\Account\Exception;
 
-use PhpFinance\DoubleEntry\Account\Account;
+use PhpFinance\DoubleEntry\Domain\Account\Account;
 use RuntimeException;
 
 final class AccountDeletionNotPossibleException extends RuntimeException

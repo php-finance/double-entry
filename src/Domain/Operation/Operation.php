@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Operation;
+namespace PhpFinance\DoubleEntry\Domain\Operation;
 
-use PhpFinance\DoubleEntry\Transaction\Transaction;
+use PhpFinance\DoubleEntry\Domain\Transaction\Transaction;
 
 final readonly class Operation
 {

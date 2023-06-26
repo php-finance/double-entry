@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Account;
+namespace PhpFinance\DoubleEntry\Domain\Account;
 
-use PhpFinance\DoubleEntry\Account\Exception\AccountDeletionNotPossibleException;
+use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountDeletionNotPossibleException;
 
 final class AccountManager
 {

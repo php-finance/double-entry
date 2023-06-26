@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Account;
+namespace PhpFinance\DoubleEntry\Domain\Operation;
 
-final readonly class AccountId
+final readonly class OperationId
 {
     public function __construct(
         public string $value
