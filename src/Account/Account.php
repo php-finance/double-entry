@@ -14,6 +14,7 @@ final class Account
 
     public function __construct(
         public readonly AccountId $id,
+        public readonly ?AccountId $parentId,
         public readonly AccountChartId $chartId,
         ?string $name = null,
     ) {
