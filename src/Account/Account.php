@@ -10,6 +10,9 @@ final class Account
 {
     private const NAME_CHARS_LIMIT = 50;
 
+    /**
+     * @psalm-var non-empty-string
+     */
     private string $name;
 
     public function __construct(
@@ -21,6 +24,9 @@ final class Account
         $this->setName($name ?? $id->value);
     }
 
+    /**
+     * @psalm-return non-empty-string
+     */
     public function getName(): string
     {
         return $this->name;
@@ -42,6 +48,7 @@ final class Account
                 )
             );
         }
+        /** @psalm-var non-empty-string $name */
 
         $this->name = $name;
     }
