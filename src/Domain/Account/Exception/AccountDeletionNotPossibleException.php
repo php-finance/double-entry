@@ -11,11 +11,9 @@ final class AccountDeletionNotPossibleException extends RuntimeException
 {
     public function __construct(Account $account)
     {
+        $name = $account->getName();
         parent::__construct(
-            sprintf(
-                'Deletion not possible, account "%s" has children.',
-                $account->getName()
-            )
+            'Deletion not possible, account' . ($name !== null ? ' "' . $name . '"' : '') . ' has children.',
         );
     }
 }

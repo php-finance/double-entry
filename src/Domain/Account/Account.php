@@ -11,26 +11,29 @@ final class Account
     private const NAME_CHARS_LIMIT = 50;
 
     /**
-     * @psalm-var non-empty-string
+     * @psalm-var non-empty-string|null
      */
-    private string $name;
+    private ?string $name;
 
     private ?AccountId $parentId;
 
+    /**
+     * @psalm-param non-empty-string|null $name
+     */
     public function __construct(
         public readonly AccountId $id,
         public readonly ?AccountChartId $chartId = null,
         ?Account $parent = null,
         ?string $name = null,
     ) {
-        $this->setName($name ?? $id->value);
+        $this->setName($name);
         $this->setParent($parent);
     }
 
     /**
-     * @psalm-return non-empty-string
+     * @psalm-return non-empty-string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -40,23 +43,28 @@ final class Account
         return $this->parentId;
     }
 
-    public function rename(string $name): void
+    public function rename(?string $name): void
     {
         $this->setName($name);
     }
 
-    private function setName(string $name): void
+    /**
+     * @pslam-param non-empty-string|null $name
+     */
+    private function setName(?string $name): void
     {
-        $length = mb_strlen($name);
-        if ($length === 0 || $length > self::NAME_CHARS_LIMIT) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Account name must be non-empty and no greater than %d symbols.',
-                    self::NAME_CHARS_LIMIT
-                )
-            );
+        if ($name !== null) {
+            $length = mb_strlen($name);
+            if ($length === 0 || $length > self::NAME_CHARS_LIMIT) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Account name must be null or non-empty string no greater than %d symbols.',
+                        self::NAME_CHARS_LIMIT
+                    )
+                );
+            }
+            /** @psalm-var non-empty-string $name */
         }
-        /** @psalm-var non-empty-string $name */
 
         $this->name = $name;
     }
