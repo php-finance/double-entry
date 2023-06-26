@@ -15,13 +15,16 @@ final class Account
      */
     private string $name;
 
+    private ?AccountId $parentId;
+
     public function __construct(
         public readonly AccountId $id,
-        public readonly ?AccountId $parentId,
-        public readonly AccountChartId $chartId,
+        public readonly ?AccountChartId $chartId = null,
+        ?Account $parent = null,
         ?string $name = null,
     ) {
         $this->setName($name ?? $id->value);
+        $this->setParent($parent);
     }
 
     /**
@@ -30,6 +33,11 @@ final class Account
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getParentId(): ?AccountId
+    {
+        return $this->parentId;
     }
 
     public function rename(string $name): void
@@ -51,5 +59,16 @@ final class Account
         /** @psalm-var non-empty-string $name */
 
         $this->name = $name;
+    }
+
+    private function setParent(?Account $parent): void
+    {
+        if (
+            $this->chartId?->value !== $parent?->chartId?->value
+        ) {
+            throw new InvalidArgumentException('Account chart of parent account is not equal to current.');
+        }
+
+        $this->parentId = $parent?->id;
     }
 }
