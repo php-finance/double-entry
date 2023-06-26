@@ -10,6 +10,11 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "ext-mbstring": "*",
+        "brick/money": "^0.8.0"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^5.13"
     }
 }
