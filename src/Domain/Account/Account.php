@@ -43,6 +43,9 @@ final class Account
         return $this->parentId;
     }
 
+    /**
+     * @psalm-param non-empty-string|null $name
+     */
     public function rename(?string $name): void
     {
         $this->setName($name);
