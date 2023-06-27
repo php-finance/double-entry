@@ -18,7 +18,7 @@ final class AccountManager
      */
     public function delete(Account $account): void
     {
-        if ($this->repository->existsChildren($account)) {
+        if ($this->repository->hasChildren($account)) {
             throw new AccountDeletionNotPossibleException($account);
         }
 

@@ -13,7 +13,7 @@ interface AccountRepositoryInterface
      */
     public function get(AccountId $id): Account;
 
-    public function existsChildren(Account $account): bool;
+    public function hasChildren(Account $account): bool;
 
     public function save(Account $account): void;
 
