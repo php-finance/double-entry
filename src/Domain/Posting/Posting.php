@@ -11,7 +11,7 @@ use PhpFinance\DoubleEntry\Domain\Posting\Factory\PostingFactory;
 final readonly class Posting
 {
     /**
-     * Don't run constructor directly, use {@see PostingFactory} instead of.
+     * Don't run directly, use {@see PostingFactory} instead of.
      */
     public function __construct(
         public PostingId $id,

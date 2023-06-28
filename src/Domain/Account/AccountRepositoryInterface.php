@@ -17,5 +17,8 @@ interface AccountRepositoryInterface
 
     public function save(Account $account): void;
 
+    /**
+     * Don't run directly, use {@see AccountManager::delete()} instead of.
+     */
     public function delete(Account $account): void;
 }

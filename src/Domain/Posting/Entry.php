@@ -7,11 +7,15 @@ namespace PhpFinance\DoubleEntry\Domain\Posting;
 use Brick\Money\Money;
 use DateTimeImmutable;
 use PhpFinance\DoubleEntry\Domain\Account\AccountId;
+use PhpFinance\DoubleEntry\Domain\Posting\Factory\PostingFactory;
 
 use function array_key_exists;
 
 final readonly class Entry
 {
+    /**
+     * Don't run directly, use {@see PostingFactory} instead of.
+     */
     public function __construct(
         public DateTimeImmutable $date,
         public Money $amount,
