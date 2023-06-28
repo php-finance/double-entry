@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Domain\Posting;
+namespace PhpFinance\DoubleEntry\Domain\Posting\Exception;
 
 use LogicException;
 
-final class DimensionNotFound extends LogicException
+final class DimensionNotFoundException extends LogicException
 {
     public function __construct(int|string $name)
     {
