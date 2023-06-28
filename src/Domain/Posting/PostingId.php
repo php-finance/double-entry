@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpFinance\DoubleEntry\Domain\Transaction;
+namespace PhpFinance\DoubleEntry\Domain\Posting;
 
-final readonly class TransactionId
+final readonly class PostingId
 {
     public function __construct(
         public string $value
