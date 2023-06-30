@@ -1,0 +1,20 @@
+{
+    "name": "php-finance/double-entry",
+    "description": "Double entry accounting",
+    "type": "library",
+    "license": "AGPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "PhpFinance\\DoubleEntry\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.2",
+        "ext-mbstring": "*",
+        "brick/money": "^0.8.0"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^5.13"
+    }
+}
