@@ -20,7 +20,7 @@ trait TestTrait
 {
     private function createAccount(
         ?string $id = null,
-        string $chartId = null,
+        ?string $chartId = null,
         ?Account $parent = null,
         ?string $name = null,
     ): Account {
