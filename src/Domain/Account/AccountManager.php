@@ -21,6 +21,11 @@ final class AccountManager
         return $this->accountRepository->get($id);
     }
 
+    public function save(Account $account): void
+    {
+        $this->accountRepository->save($account);
+    }
+
     /**
      * @psalm-param non-empty-string|null $name
      */

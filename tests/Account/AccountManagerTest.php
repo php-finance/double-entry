@@ -26,6 +26,19 @@ final class AccountManagerTest extends TestCase
         $this->assertSame($result, $account);
     }
 
+    public function testSave(): void
+    {
+        $accountRepository = $this->createAccountRepository();
+        $accountManager = $this->createAccountManager(
+            accountRepository: $accountRepository,
+        );
+
+        $account = $this->createAccount('incomes');
+        $accountManager->save($account);
+
+        $this->assertSame([$account], $accountRepository->getAll());
+    }
+
     public function testCreate(): void
     {
         $accountManager = $this->createAccountManager(
