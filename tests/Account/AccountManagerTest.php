@@ -4,14 +4,27 @@ declare(strict_types=1);
 
 namespace PhpFinance\DoubleEntry\Tests\Account;
 
+use PhpFinance\DoubleEntry\Domain\Account\AccountId;
 use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountDeletionNotPossibleException;
 use PhpFinance\DoubleEntry\Domain\Posting\Factory\EntryData;
 use PhpFinance\DoubleEntry\Tests\Support\TestTrait;
 use PHPUnit\Framework\TestCase;
 
-final class AccountTest extends TestCase
+final class AccountManagerTest extends TestCase
 {
     use TestTrait;
+
+    public function testGet(): void
+    {
+        $account = $this->createAccount('incomes');
+        $accountManager = $this->createAccountManager(
+            accountRepository: $this->createAccountRepository($account),
+        );
+
+        $result = $accountManager->get(new AccountId('incomes'));
+
+        $this->assertSame($result, $account);
+    }
 
     public function testCreate(): void
     {

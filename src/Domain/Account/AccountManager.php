@@ -16,6 +16,11 @@ final class AccountManager
     ) {
     }
 
+    public function get(AccountId $id): Account
+    {
+        return $this->accountRepository->get($id);
+    }
+
     /**
      * @psalm-param non-empty-string|null $name
      */
