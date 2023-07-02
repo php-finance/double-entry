@@ -7,7 +7,7 @@ namespace PhpFinance\DoubleEntry\Domain\Account;
 use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountNotFoundException;
 
 /**
- * Use {@see AccountManager} instead of repository directly usage.
+ * Use {@see AccountManager} instead of repository direct usage.
  */
 interface AccountRepositoryInterface
 {
