@@ -11,8 +11,36 @@ final class AccountManager
 {
     public function __construct(
         private readonly AccountRepositoryInterface $accountRepository,
+        private readonly AccountIdFactoryInterface $accountIdFactory,
         private readonly PostingRepositoryInterface $postingRepository,
     ) {
+    }
+
+    public function get(AccountId $id): Account
+    {
+        return $this->accountRepository->get($id);
+    }
+
+    public function save(Account $account): void
+    {
+        $this->accountRepository->save($account);
+    }
+
+    /**
+     * @psalm-param non-empty-string|null $name
+     */
+    public function create(?AccountChartId $chartId = null, ?Account $parent = null, ?string $name = null): Account
+    {
+        $account = new Account(
+            $this->accountIdFactory->create(),
+            $chartId,
+            $parent,
+            $name,
+        );
+
+        $this->accountRepository->save($account);
+
+        return $account;
     }
 
     /**

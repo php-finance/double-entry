@@ -74,7 +74,7 @@ final class Account
 
     private function setParent(?Account $parent): void
     {
-        if ($this->chartId?->value !== $parent?->chartId?->value) {
+        if ($parent !== null && $this->chartId?->value !== $parent->chartId?->value) {
             throw new InvalidArgumentException('Account chart of parent account is not equal to current.');
         }
 

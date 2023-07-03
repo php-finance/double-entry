@@ -8,6 +8,11 @@
             "PhpFinance\\DoubleEntry\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpFinance\\DoubleEntry\\Tests\\": "tests/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
@@ -15,6 +20,10 @@
         "brick/money": "^0.8.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^10.2",
         "vimeo/psalm": "^5.13"
+    },
+    "config": {
+        "sort-packages": true
     }
 }

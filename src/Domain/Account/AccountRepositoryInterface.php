@@ -6,6 +6,9 @@ namespace PhpFinance\DoubleEntry\Domain\Account;
 
 use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountNotFoundException;
 
+/**
+ * Use {@see AccountManager} instead of repository direct usage.
+ */
 interface AccountRepositoryInterface
 {
     /**
@@ -17,8 +20,5 @@ interface AccountRepositoryInterface
 
     public function save(Account $account): void;
 
-    /**
-     * Don't run directly, use {@see AccountManager::delete()} instead of.
-     */
     public function delete(Account $account): void;
 }

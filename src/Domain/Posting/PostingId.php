@@ -10,4 +10,9 @@ final readonly class PostingId
         public string $value
     ) {
     }
+
+    public function isEqualTo(PostingId $id): bool
+    {
+        return $this->value === $id->value;
+    }
 }

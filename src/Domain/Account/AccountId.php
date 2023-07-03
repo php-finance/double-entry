@@ -10,4 +10,9 @@ final readonly class AccountId
         public string $value
     ) {
     }
+
+    public function isEqualTo(AccountId $id): bool
+    {
+        return $this->value === $id->value;
+    }
 }
