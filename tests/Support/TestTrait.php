@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace PhpFinance\DoubleEntry\Tests\Support;
 
+use Brick\Math\BigRational;
 use Brick\Money\Money;
+use Brick\Money\MoneyBag;
 use DateTimeImmutable;
 use PhpFinance\DoubleEntry\Domain\Account\Account;
 use PhpFinance\DoubleEntry\Domain\Account\AccountChartId;
@@ -18,21 +20,29 @@ use PhpFinance\DoubleEntry\Domain\Posting\PostingRepositoryInterface;
 
 trait TestTrait
 {
-    private function createAccount(
+    protected function assertSameMoneyBags(MoneyBag $expectedMoneyBag, MoneyBag $moneyBag): void
+    {
+        $prepareFn = static fn(BigRational $value) => (string) $value->simplified();
+        $expectedAmounts = array_map($prepareFn, $expectedMoneyBag->getAmounts());
+        $amounts = array_map($prepareFn, $moneyBag->getAmounts());
+        static::assertEquals($expectedAmounts, $amounts);
+    }
+
+    protected static function createAccount(
         ?string $id = null,
         ?string $chartId = null,
         ?Account $parent = null,
         ?string $name = null,
     ): Account {
         return new Account(
-            $id === null ? $this->createAccountIdFactory()->create() : new AccountId($id),
+            $id === null ? self::createAccountIdFactory()->create() : new AccountId($id),
             $chartId === null ? null : new AccountChartId($chartId),
             $parent,
             $name,
         );
     }
 
-    private function createAccountIdFactory(array $ids = []): TestAccountIdFactory
+    protected static function createAccountIdFactory(array $ids = []): TestAccountIdFactory
     {
         $factory = new TestAccountIdFactory();
 
@@ -43,7 +53,7 @@ trait TestTrait
         return $factory;
     }
 
-    private function createAccountRepository(Account ...$accounts): InMemoryAccountRepository
+    protected static function createAccountRepository(Account ...$accounts): InMemoryAccountRepository
     {
         return new InMemoryAccountRepository($accounts);
     }
@@ -51,19 +61,19 @@ trait TestTrait
     /**
      * @param string[] $accountIds
      */
-    private function createAccountManager(
+    protected static function createAccountManager(
         array $accountIds = [],
         ?AccountRepositoryInterface $accountRepository = null,
         ?PostingRepositoryInterface $postingRepository = null,
     ): AccountManager {
         return new AccountManager(
             $accountRepository ?? new InMemoryAccountRepository(),
-            $this->createAccountIdFactory($accountIds),
+            self::createAccountIdFactory($accountIds),
             $postingRepository ?? new InMemoryPostingRepository(),
         );
     }
 
-    private function createPosting(
+    protected static function createPosting(
         EntryData $debitData,
         EntryData $creditData,
         ?string $id = null,
@@ -71,7 +81,7 @@ trait TestTrait
         ?Money $amount = null,
     ): Posting {
         $factory = new PostingFactory(
-            $this->createPostingIdFactory($id === null ? [] : [$id])
+            self::createPostingIdFactory($id === null ? [] : [$id])
         );
 
         return $factory->create(
@@ -82,7 +92,7 @@ trait TestTrait
         );
     }
 
-    private function createPostingIdFactory(array $ids = []): TestPostingIdFactory
+    protected static function createPostingIdFactory(array $ids = []): TestPostingIdFactory
     {
         $factory = new TestPostingIdFactory();
 
@@ -93,7 +103,7 @@ trait TestTrait
         return $factory;
     }
 
-    private function createPostingRepository(Posting ...$postings): InMemoryPostingRepository
+    protected static function createPostingRepository(Posting ...$postings): InMemoryPostingRepository
     {
         return new InMemoryPostingRepository($postings);
     }

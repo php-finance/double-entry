@@ -16,9 +16,9 @@ final class AccountManagerTest extends TestCase
 
     public function testGet(): void
     {
-        $account = $this->createAccount('incomes');
-        $accountManager = $this->createAccountManager(
-            accountRepository: $this->createAccountRepository($account),
+        $account = self::createAccount('incomes');
+        $accountManager = self::createAccountManager(
+            accountRepository: self::createAccountRepository($account),
         );
 
         $result = $accountManager->get(new AccountId('incomes'));
@@ -28,12 +28,12 @@ final class AccountManagerTest extends TestCase
 
     public function testSave(): void
     {
-        $accountRepository = $this->createAccountRepository();
-        $accountManager = $this->createAccountManager(
+        $accountRepository = self::createAccountRepository();
+        $accountManager = self::createAccountManager(
             accountRepository: $accountRepository,
         );
 
-        $account = $this->createAccount('incomes');
+        $account = self::createAccount('incomes');
         $accountManager->save($account);
 
         $this->assertSame([$account], $accountRepository->getAll());
@@ -41,7 +41,7 @@ final class AccountManagerTest extends TestCase
 
     public function testCreate(): void
     {
-        $accountManager = $this->createAccountManager(
+        $accountManager = self::createAccountManager(
             accountIds: ['7'],
         );
 
@@ -52,10 +52,10 @@ final class AccountManagerTest extends TestCase
 
     public function testDelete(): void
     {
-        $account1 = $this->createAccount('1');
-        $account2 = $this->createAccount('2');
-        $accountRepository = $this->createAccountRepository($account1, $account2);
-        $accountManager = $this->createAccountManager(
+        $account1 = self::createAccount('1');
+        $account2 = self::createAccount('2');
+        $accountRepository = self::createAccountRepository($account1, $account2);
+        $accountManager = self::createAccountManager(
             accountRepository: $accountRepository,
         );
 
@@ -66,13 +66,13 @@ final class AccountManagerTest extends TestCase
 
     public function testDeleteWithChildren(): void
     {
-        $accountIncomes = $this->createAccount('incomes');
-        $accountSalary = $this->createAccount(
+        $accountIncomes = self::createAccount('incomes');
+        $accountSalary = self::createAccount(
             'salary',
             parent: $accountIncomes
         );
-        $accountRepository = $this->createAccountRepository($accountIncomes, $accountSalary);
-        $accountManager = $this->createAccountManager(
+        $accountRepository = self::createAccountRepository($accountIncomes, $accountSalary);
+        $accountManager = self::createAccountManager(
             accountRepository: $accountRepository,
         );
 
@@ -83,12 +83,12 @@ final class AccountManagerTest extends TestCase
 
     public function testDeleteWithPostings(): void
     {
-        $account = $this->createAccount('incomes');
-        $accountRepository = $this->createAccountRepository($account);
-        $accountManager = $this->createAccountManager(
+        $account = self::createAccount('incomes');
+        $accountRepository = self::createAccountRepository($account);
+        $accountManager = self::createAccountManager(
             accountRepository: $accountRepository,
-            postingRepository: $this->createPostingRepository(
-                $this->createPosting(
+            postingRepository: self::createPostingRepository(
+                self::createPosting(
                     new EntryData($account),
                     new EntryData($account),
                 ),
