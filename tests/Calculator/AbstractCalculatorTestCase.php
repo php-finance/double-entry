@@ -27,7 +27,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
         $expensesAccount = self::createAccount('expenses');
         $walletAccount = self::createAccount('wallet');
 
-        $data = [
+        return [
             'without-filter' => array_merge(
                 self::createData1($incomesAccount, $expensesAccount, $walletAccount),
                 [
@@ -111,8 +111,6 @@ abstract class AbstractCalculatorTestCase extends TestCase
                 ]
             ),
         ];
-
-        return $data;
     }
 
     #[DataProvider('dataCalc')]
