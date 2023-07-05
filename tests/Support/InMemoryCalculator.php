@@ -79,16 +79,19 @@ final readonly class InMemoryCalculator implements CalculatorInterface
             return false;
         }
 
-        $success = false;
-        $entryCurrency = $entry->amount->getCurrency();
-        foreach ($filter->getCurrencies() as $currency) {
-            if ($currency->is($entryCurrency)) {
-                $success = true;
-                break;
+        $currencies = $filter->getCurrencies();
+        if (!empty($currencies)) {
+            $success = false;
+            $entryCurrency = $entry->amount->getCurrency();
+            foreach ($currencies as $currency) {
+                if ($currency->is($entryCurrency)) {
+                    $success = true;
+                    break;
+                }
             }
-        }
-        if (!$success) {
-            return false;
+            if (!$success) {
+                return false;
+            }
         }
 
         return true;

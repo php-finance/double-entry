@@ -24,6 +24,8 @@ abstract class AbstractCalculatorTestCase extends TestCase
         $data = [];
 
         /**
+         * Calculate without filter
+         *
          * Dr wallet Cr incomes 100 USD
          * Dr wallet Cr incomes 150 USD
          * Dr expenses Cr wallet 30 USD
@@ -59,9 +61,44 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     amount: Money::of(25, 'USD'),
                 ),
             ],
-            $walletAccount
+            $walletAccount,
         ];
 
+        /**
+         * Calculate with filter by one dimension
+         *
+         * Dr wallet (John) Cr incomes 100 USD
+         * Dr wallet (Mike) Cr incomes 150 USD
+         * Dr expenses Cr wallet (John) 30 USD
+         */
+        $incomesAccount = self::createAccount('incomes');
+        $expensesAccount = self::createAccount('expenses');
+        $walletAccount = self::createAccount('wallet');
+        $data['base'] = [
+            (new MoneyBag())->add(Money::of(100, 'USD')),
+            (new MoneyBag())->add(Money::of(30, 'USD')),
+            (new MoneyBag())->add(Money::of(70, 'USD')),
+            [$incomesAccount, $expensesAccount, $walletAccount],
+            [
+                self::createPosting(
+                    new EntryData($walletAccount, ['contractor' => 'John']),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(100, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount, ['contractor' => 'Mike']),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(150, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount, ['contractor' => 'John']),
+                    amount: Money::of(30, 'USD'),
+                ),
+            ],
+            $walletAccount,
+            new Filter(dimensions: ['contractor' => 'John']),
+        ];
 
         return $data;
     }
