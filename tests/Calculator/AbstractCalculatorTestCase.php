@@ -6,6 +6,7 @@ namespace PhpFinance\DoubleEntry\Tests\Calculator;
 
 use Brick\Money\Money;
 use Brick\Money\MoneyBag;
+use DateTimeImmutable;
 use PhpFinance\DoubleEntry\Domain\Account\Account;
 use PhpFinance\DoubleEntry\Domain\Calculator\CalculatorInterface;
 use PhpFinance\DoubleEntry\Domain\Calculator\Filter;
@@ -152,6 +153,186 @@ abstract class AbstractCalculatorTestCase extends TestCase
             ],
             $walletAccount,
             new Filter(dimensions: ['contractor' => 'John', 'priority' => 'High']),
+        ];
+
+        /**
+         * Calculate with filter by date from
+         *
+         * 01.12.2020 Dr wallet Cr incomes 100 USD
+         * 15.12.2020 Dr wallet Cr incomes 90 USD
+         * 25.01.2021 Dr wallet Cr incomes 5 USD
+         * 20.02.2021 Dr expenses Cr wallet 30 USD
+         * 21.02.2021 Dr wallet Cr incomes 150 USD
+         * 05.03.2021 Dr expenses Cr wallet 10 USD
+         */
+        $incomesAccount = self::createAccount('incomes');
+        $expensesAccount = self::createAccount('expenses');
+        $walletAccount = self::createAccount('wallet');
+        $data['filter-by-date-from'] = [
+            (new MoneyBag())->add(Money::of(155, 'USD')), // 5 + 150
+            (new MoneyBag())->add(Money::of(40, 'USD')), // 30 + 10
+            (new MoneyBag())->add(Money::of(115, 'USD')),
+            [$incomesAccount, $expensesAccount, $walletAccount],
+            [
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('01.12.2020'),
+                    amount: Money::of(100, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('15.12.2020'),
+                    amount: Money::of(90, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('25.01.2021'),
+                    amount: Money::of(5, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    date: new DateTimeImmutable('20.02.2021'),
+                    amount: Money::of(30, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('21.02.2021'),
+                    amount: Money::of(150, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    date: new DateTimeImmutable('05.03.2021'),
+                    amount: Money::of(10, 'USD'),
+                ),
+            ],
+            $walletAccount,
+            new Filter(dateFrom: new DateTimeImmutable('01.01.2021')),
+        ];
+
+        /**
+         * Calculate with filter by date to
+         *
+         * 01.12.2020 Dr wallet Cr incomes 100 USD
+         * 15.12.2020 Dr wallet Cr incomes 90 USD
+         * 25.01.2021 Dr wallet Cr incomes 5 USD
+         * 19.02.2021 Dr expenses Cr wallet 30 USD
+         * 21.02.2021 Dr wallet Cr incomes 150 USD
+         * 05.03.2021 Dr expenses Cr wallet 10 USD
+         */
+        $incomesAccount = self::createAccount('incomes');
+        $expensesAccount = self::createAccount('expenses');
+        $walletAccount = self::createAccount('wallet');
+        $data['filter-by-date-to'] = [
+            (new MoneyBag())->add(Money::of(195, 'USD')), // 100 + 90 + 5
+            (new MoneyBag())->add(Money::of(30, 'USD')),
+            (new MoneyBag())->add(Money::of(165, 'USD')),
+            [$incomesAccount, $expensesAccount, $walletAccount],
+            [
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('01.12.2020'),
+                    amount: Money::of(100, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('15.12.2020'),
+                    amount: Money::of(90, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('25.01.2021'),
+                    amount: Money::of(5, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    date: new DateTimeImmutable('19.02.2021'),
+                    amount: Money::of(30, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('21.02.2021'),
+                    amount: Money::of(150, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    date: new DateTimeImmutable('05.03.2021'),
+                    amount: Money::of(10, 'USD'),
+                ),
+            ],
+            $walletAccount,
+            new Filter(dateTo: new DateTimeImmutable('20.02.2021')),
+        ];
+
+        /**
+         * Calculate with filter by date period
+         *
+         * 01.12.2020 Dr wallet Cr incomes 100 USD
+         * 15.12.2020 Dr wallet Cr incomes 90 USD
+         * 25.01.2021 Dr wallet Cr incomes 5 USD
+         * 20.02.2021 Dr expenses Cr wallet 30 USD
+         * 21.02.2021 Dr wallet Cr incomes 150 USD
+         * 05.03.2021 Dr expenses Cr wallet 10 USD
+         */
+        $incomesAccount = self::createAccount('incomes');
+        $expensesAccount = self::createAccount('expenses');
+        $walletAccount = self::createAccount('wallet');
+        $data['filter-by-date-period'] = [
+            (new MoneyBag())->add(Money::of(155, 'USD')), // 5 + 150
+            (new MoneyBag())->add(Money::of(30, 'USD')),
+            (new MoneyBag())->add(Money::of(125, 'USD')),
+            [$incomesAccount, $expensesAccount, $walletAccount],
+            [
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('01.12.2020'),
+                    amount: Money::of(100, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('15.12.2020'),
+                    amount: Money::of(90, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('25.01.2021'),
+                    amount: Money::of(5, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    date: new DateTimeImmutable('20.02.2021'),
+                    amount: Money::of(30, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    date: new DateTimeImmutable('21.02.2021'),
+                    amount: Money::of(150, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    date: new DateTimeImmutable('05.03.2021'),
+                    amount: Money::of(10, 'USD'),
+                ),
+            ],
+            $walletAccount,
+            new Filter(dateFrom: new DateTimeImmutable('01.01.2021'), dateTo: new DateTimeImmutable('27.02.2021')),
         ];
 
         return $data;
