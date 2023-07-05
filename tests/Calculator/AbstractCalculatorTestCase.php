@@ -78,9 +78,9 @@ abstract class AbstractCalculatorTestCase extends TestCase
     ): void {
         $calculator = $this->createCalculator($accounts, $postings);
 
-        $this->assertSameMoneyBags($expectedDebit, $calculator->calcDebit($account, $filter));
-        $this->assertSameMoneyBags($expectedCredit, $calculator->calcCredit($account, $filter));
-        $this->assertSameMoneyBags($expectedBalance, $calculator->calcBalance($account, $filter));
+        $this->assertSameMoneyBags($expectedDebit, $calculator->debit($account, $filter));
+        $this->assertSameMoneyBags($expectedCredit, $calculator->credit($account, $filter));
+        $this->assertSameMoneyBags($expectedBalance, $calculator->balance($account, $filter));
     }
 
     /**

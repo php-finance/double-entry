@@ -9,9 +9,9 @@ use PhpFinance\DoubleEntry\Domain\Account\Account;
 
 interface CalculatorInterface
 {
-    public function calcDebit(Account $account, ?Filter $filter = null): MoneyBag;
+    public function debit(Account $account, ?Filter $filter = null): MoneyBag;
 
-    public function calcCredit(Account $account, ?Filter $filter = null): MoneyBag;
+    public function credit(Account $account, ?Filter $filter = null): MoneyBag;
 
-    public function calcBalance(Account $account, ?Filter $filter = null): MoneyBag;
+    public function balance(Account $account, ?Filter $filter = null): MoneyBag;
 }

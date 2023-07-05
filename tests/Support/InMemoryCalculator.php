@@ -17,7 +17,7 @@ final readonly class InMemoryCalculator implements CalculatorInterface
     ) {
     }
 
-    public function calcDebit(Account $account, ?Filter $filter = null): MoneyBag
+    public function debit(Account $account, ?Filter $filter = null): MoneyBag
     {
         $moneyBag = new MoneyBag();
         foreach ($this->postingRepository->getAll() as $posting) {
@@ -28,7 +28,7 @@ final readonly class InMemoryCalculator implements CalculatorInterface
         return $moneyBag;
     }
 
-    public function calcCredit(Account $account, ?Filter $filter = null): MoneyBag
+    public function credit(Account $account, ?Filter $filter = null): MoneyBag
     {
         $moneyBag = new MoneyBag();
         foreach ($this->postingRepository->getAll() as $posting) {
@@ -39,7 +39,7 @@ final readonly class InMemoryCalculator implements CalculatorInterface
         return $moneyBag;
     }
 
-    public function calcBalance(Account $account, ?Filter $filter = null): MoneyBag
+    public function balance(Account $account, ?Filter $filter = null): MoneyBag
     {
         $moneyBag = new MoneyBag();
         foreach ($this->postingRepository->getAll() as $posting) {
