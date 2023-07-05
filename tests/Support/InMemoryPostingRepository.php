@@ -56,4 +56,12 @@ final class InMemoryPostingRepository implements PostingRepositoryInterface
     {
         $this->postings[$posting->id->value] = $posting;
     }
+
+    /**
+     * @return Posting[]
+     */
+    public function getAll(): array
+    {
+        return array_values($this->postings);
+    }
 }

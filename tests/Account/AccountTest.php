@@ -16,7 +16,7 @@ final class AccountTest extends TestCase
 
     public function testRename(): void
     {
-        $account = $this->createAccount('incomes', name: 'My Incomes');
+        $account = self::createAccount('incomes', name: 'My Incomes');
 
         $account->rename('All Incomes');
 
@@ -25,7 +25,7 @@ final class AccountTest extends TestCase
 
     public function testRenameToEmptyString(): void
     {
-        $account = $this->createAccount();
+        $account = self::createAccount();
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Account name must be null or non-empty string no greater than 50 symbols.');
@@ -35,7 +35,7 @@ final class AccountTest extends TestCase
     public function testCreateAccountWithParentFromAnotherChart(): void
     {
         $id = new AccountId('incomes');
-        $parent = $this->createAccount(chartId: 'clients');
+        $parent = self::createAccount(chartId: 'clients');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Account chart of parent account is not equal to current.');
