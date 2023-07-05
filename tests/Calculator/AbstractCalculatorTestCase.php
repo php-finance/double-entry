@@ -47,6 +47,16 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     new Filter(currencies: [Currency::of('RUB')])
                 ]
             ),
+            'filter-by-two-currency' => array_merge(
+                self::createData2($incomesAccount, $expensesAccount, $walletAccount),
+                [
+                    (new MoneyBag())->add(Money::of(122, 'RUB'))->add(Money::of(180, 'USD')),
+                    (new MoneyBag())->add(Money::of(71, 'RUB'))->add(Money::of(22, 'USD')),
+                    (new MoneyBag())->add(Money::of(51, 'RUB'))->add(Money::of(158, 'USD')),
+                    $walletAccount,
+                    new Filter(currencies: [Currency::of('RUB'), Currency::of('USD')])
+                ]
+            ),
             'filter-by-one-dimension' => array_merge(
                 self::createData3($incomesAccount, $expensesAccount, $walletAccount),
                 [
@@ -173,6 +183,8 @@ abstract class AbstractCalculatorTestCase extends TestCase
      * Dr expenses Cr wallet 71 RUB
      * Dr wallet Cr incomes 22 RUB
      * Dr wallet Cr incomes 500 IDR
+     * Dr expenses Cr wallet 15 USD
+     * Dr expenses Cr wallet 7 USD
      */
     private static function createData2(
         Account $incomesAccount,
@@ -211,6 +223,16 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(500, 'IDR'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    amount: Money::of(15, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    amount: Money::of(7, 'USD'),
                 ),
             ],
         ];
