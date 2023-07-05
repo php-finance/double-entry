@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpFinance\DoubleEntry\Tests\Calculator;
 
+use Brick\Money\Currency;
 use Brick\Money\Money;
 use Brick\Money\MoneyBag;
 use DateTimeImmutable;
@@ -333,6 +334,60 @@ abstract class AbstractCalculatorTestCase extends TestCase
             ],
             $walletAccount,
             new Filter(dateFrom: new DateTimeImmutable('01.01.2021'), dateTo: new DateTimeImmutable('27.02.2021')),
+        ];
+
+        /**
+         * Calculate with filter by one currency
+         *
+         * Dr wallet Cr incomes 100 RUB
+         * Dr wallet Cr incomes 150 USD
+         * Dr wallet Cr incomes 30 USD
+         * Dr expenses Cr wallet 71 RUB
+         * Dr wallet Cr incomes 22 RUB
+         * Dr wallet Cr incomes 500 IDR
+         */
+        $incomesAccount = self::createAccount('incomes');
+        $expensesAccount = self::createAccount('expenses');
+        $walletAccount = self::createAccount('wallet');
+        $data['filter-by-one-currency'] = [
+            (new MoneyBag())->add(Money::of(122, 'RUB')), // 100 + 22
+            (new MoneyBag())->add(Money::of(71, 'RUB')), // 30
+            (new MoneyBag())->add(Money::of(51, 'RUB')),
+            [$incomesAccount, $expensesAccount, $walletAccount],
+            [
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(100, 'RUB'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(150, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(30, 'USD'),
+                ),
+                self::createPosting(
+                    new EntryData($expensesAccount),
+                    new EntryData($walletAccount),
+                    amount: Money::of(71, 'RUB'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(22, 'RUB'),
+                ),
+                self::createPosting(
+                    new EntryData($walletAccount),
+                    new EntryData($incomesAccount),
+                    amount: Money::of(500, 'IDR'),
+                ),
+            ],
+            $walletAccount,
+            new Filter(currencies: [Currency::of('RUB')])
         ];
 
         return $data;
