@@ -20,6 +20,7 @@
         "brick/money": "^0.8.0"
     },
     "require-dev": {
+        "maglnet/composer-require-checker": "^4.6",
         "phpunit/phpunit": "^10.2",
         "vimeo/psalm": "^5.13"
     },
