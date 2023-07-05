@@ -10,6 +10,7 @@ on:
       - 'README.md'
 
   push:
+    branches: [ 'master' ]
     paths-ignore:
       - '.editorconfig'
       - '.gitignore'
