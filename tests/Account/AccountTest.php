@@ -7,16 +7,14 @@ namespace PhpFinance\DoubleEntry\Tests\Account;
 use InvalidArgumentException;
 use PhpFinance\DoubleEntry\Domain\Account\Account;
 use PhpFinance\DoubleEntry\Domain\Account\AccountId;
-use PhpFinance\DoubleEntry\Tests\Support\TestTrait;
+use PhpFinance\DoubleEntry\Tests\Support\TestFactory;
 use PHPUnit\Framework\TestCase;
 
 final class AccountTest extends TestCase
 {
-    use TestTrait;
-
     public function testRename(): void
     {
-        $account = self::createAccount('incomes', name: 'My Incomes');
+        $account = TestFactory::createAccount('incomes', name: 'My Incomes');
 
         $account->rename('All Incomes');
 
@@ -25,7 +23,7 @@ final class AccountTest extends TestCase
 
     public function testRenameToEmptyString(): void
     {
-        $account = self::createAccount();
+        $account = TestFactory::createAccount();
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Account name must be null or non-empty string no greater than 50 symbols.');
@@ -35,7 +33,7 @@ final class AccountTest extends TestCase
     public function testCreateAccountWithParentFromAnotherChart(): void
     {
         $id = new AccountId('incomes');
-        $parent = self::createAccount(chartId: 'clients');
+        $parent = TestFactory::createAccount(chartId: 'clients');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Account chart of parent account is not equal to current.');

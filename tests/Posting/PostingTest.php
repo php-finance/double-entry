@@ -8,21 +8,19 @@ use Brick\Money\Money;
 use DateTimeImmutable;
 use PhpFinance\DoubleEntry\Domain\Posting\Exception\DimensionNotFoundException;
 use PhpFinance\DoubleEntry\Domain\Posting\Factory\EntryData;
-use PhpFinance\DoubleEntry\Tests\Support\TestTrait;
+use PhpFinance\DoubleEntry\Tests\Support\TestFactory;
 use PHPUnit\Framework\TestCase;
 
 final class PostingTest extends TestCase
 {
-    use TestTrait;
-
     public function testBase(): void
     {
         $date = new DateTimeImmutable('01.01.2023');
         $amount = Money::of(200, 'USD');
 
-        $posting = self::createPosting(
-            new EntryData(self::createAccount('wallet'), ['place' => 'home']),
-            new EntryData(self::createAccount('incomes'), ['type' => 'salary']),
+        $posting = TestFactory::createPosting(
+            new EntryData(TestFactory::createAccount('wallet'), ['place' => 'home']),
+            new EntryData(TestFactory::createAccount('incomes'), ['type' => 'salary']),
             '7',
             $date,
             $amount
@@ -52,9 +50,9 @@ final class PostingTest extends TestCase
 
     public function testGetNonExistDimension(): void
     {
-        $posting = self::createPosting(
-            new EntryData(self::createAccount('wallet')),
-            new EntryData(self::createAccount('incomes')),
+        $posting = TestFactory::createPosting(
+            new EntryData(TestFactory::createAccount('wallet')),
+            new EntryData(TestFactory::createAccount('incomes')),
         );
 
         $this->expectException(DimensionNotFoundException::class);
