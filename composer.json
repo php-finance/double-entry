@@ -22,9 +22,13 @@
     "require-dev": {
         "maglnet/composer-require-checker": "^4.6",
         "phpunit/phpunit": "^10.2",
+        "roave/infection-static-analysis-plugin": "^1.32",
         "vimeo/psalm": "^5.13"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": false
+        }
     }
 }

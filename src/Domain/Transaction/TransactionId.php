@@ -10,4 +10,9 @@ final readonly class TransactionId
         public string $value
     ) {
     }
+
+    public function isEqualTo(TransactionId $id): bool
+    {
+        return $this->value === $id->value;
+    }
 }

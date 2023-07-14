@@ -11,7 +11,7 @@ use PhpFinance\DoubleEntry\Domain\Transaction\Transaction;
 final class TransactionFactory
 {
     public function __construct(
-        private TransactionIdFactory $transactionIdFactory,
+        private TransactionIdFactoryInterface $transactionIdFactory,
         private PostingFactory $postingFactory,
     ) {
     }

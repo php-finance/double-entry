@@ -44,13 +44,30 @@ abstract class AbstractAccountManagerTestCase extends TestCase
 
     public function testCreate(): void
     {
+        $accountRepository = $this->createAccountRepository();
         $accountManager = $this->createAccountManager(
             newAccountIds: ['7'],
+            accountRepository: $accountRepository,
         );
 
         $account = $accountManager->create();
 
         $this->assertSame('7', $account->id->value);
+        $this->assertTrue($accountRepository->exists(new AccountId('7')));
+    }
+
+    public function testExists(): void
+    {
+        $accountManager = $this->createAccountManager(
+            accountRepository: $this->createAccountRepository(
+                TestFactory::createAccount('1'),
+                TestFactory::createAccount('2'),
+            ),
+        );
+
+        $this->assertTrue($accountManager->exists(new AccountId('1')));
+        $this->assertTrue($accountManager->exists(new AccountId('2')));
+        $this->assertFalse($accountManager->exists(new AccountId('3')));
     }
 
     public function testDelete(): void
@@ -84,6 +101,23 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         $accountManager->delete($accountIncomes);
     }
 
+    public function testDeleteWithChildrenAndNamedAccounts(): void
+    {
+        $accountIncomes = TestFactory::createAccount('acc1', name: 'Incomes');
+        $accountSalary = TestFactory::createAccount(
+            'salary',
+            parent: $accountIncomes
+        );
+        $accountRepository = $this->createAccountRepository($accountIncomes, $accountSalary);
+        $accountManager = $this->createAccountManager(
+            accountRepository: $accountRepository,
+        );
+
+        $this->expectException(AccountDeletionNotPossibleException::class);
+        $this->expectExceptionMessage('Deletion not possible, account "Incomes" has children.');
+        $accountManager->delete($accountIncomes);
+    }
+
     public function testDeleteWithPostings(): void
     {
         $account = TestFactory::createAccount('incomes');
@@ -100,6 +134,25 @@ abstract class AbstractAccountManagerTestCase extends TestCase
 
         $this->expectException(AccountDeletionNotPossibleException::class);
         $this->expectExceptionMessage('Deletion not possible, entries with account exists.');
+        $accountManager->delete($account);
+    }
+
+    public function testDeleteWithPostingsAndNamedAccounts(): void
+    {
+        $account = TestFactory::createAccount('acc1', name: 'Incomes');
+        $accountRepository = $this->createAccountRepository($account);
+        $accountManager = $this->createAccountManager(
+            accountRepository: $accountRepository,
+            postingRepository: $this->createPostingRepository(
+                TestFactory::createPosting(
+                    new EntryData($account),
+                    new EntryData($account),
+                ),
+            ),
+        );
+
+        $this->expectException(AccountDeletionNotPossibleException::class);
+        $this->expectExceptionMessage('Deletion not possible, entries with account "Incomes" exists.');
         $accountManager->delete($account);
     }
 
