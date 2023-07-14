@@ -44,13 +44,16 @@ abstract class AbstractAccountManagerTestCase extends TestCase
 
     public function testCreate(): void
     {
+        $accountRepository = $this->createAccountRepository();
         $accountManager = $this->createAccountManager(
             newAccountIds: ['7'],
+            accountRepository: $accountRepository,
         );
 
         $account = $accountManager->create();
 
         $this->assertSame('7', $account->id->value);
+        $this->assertTrue($accountRepository->exists(new AccountId('7')));
     }
 
     public function testDelete(): void

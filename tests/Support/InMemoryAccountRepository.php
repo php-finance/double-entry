@@ -9,6 +9,8 @@ use PhpFinance\DoubleEntry\Domain\Account\AccountId;
 use PhpFinance\DoubleEntry\Domain\Account\AccountRepositoryInterface;
 use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountNotFoundException;
 
+use function array_key_exists;
+
 final class InMemoryAccountRepository implements AccountRepositoryInterface
 {
     /**
@@ -29,6 +31,11 @@ final class InMemoryAccountRepository implements AccountRepositoryInterface
     public function get(AccountId $id): Account
     {
         return $this->accounts[$id->value] ?? throw new AccountNotFoundException();
+    }
+
+    public function exists(AccountId $id): bool
+    {
+        return array_key_exists($id->value, $this->accounts);
     }
 
     public function hasChildren(Account $account): bool
