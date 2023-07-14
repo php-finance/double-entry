@@ -56,6 +56,20 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         $this->assertTrue($accountRepository->exists(new AccountId('7')));
     }
 
+    public function testExists(): void
+    {
+        $accountManager = $this->createAccountManager(
+            accountRepository: $this->createAccountRepository(
+                TestFactory::createAccount('1'),
+                TestFactory::createAccount('2'),
+            ),
+        );
+
+        $this->assertTrue($accountManager->exists(new AccountId('1')));
+        $this->assertTrue($accountManager->exists(new AccountId('2')));
+        $this->assertFalse($accountManager->exists(new AccountId('3')));
+    }
+
     public function testDelete(): void
     {
         $account1 = TestFactory::createAccount('1');

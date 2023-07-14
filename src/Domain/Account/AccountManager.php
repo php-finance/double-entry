@@ -21,6 +21,11 @@ final class AccountManager
         return $this->accountRepository->get($id);
     }
 
+    public function exists(AccountId $id): bool
+    {
+        return $this->accountRepository->exists($id);
+    }
+
     public function save(Account $account): void
     {
         $this->accountRepository->save($account);
