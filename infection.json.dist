@@ -1,0 +1,13 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "php:\/\/stderr"
+    },
+    "mutators": {
+        "@default": true
+    }
+}
