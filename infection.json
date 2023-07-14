@@ -1,0 +1,18 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "php:\/\/stderr"
+    },
+    "mutators": {
+        "@default": true,
+        "IncrementInteger": {
+            "ignore": [
+                "PhpFinance\\DoubleEntry\\Domain\\Transaction\\Transaction::getDate"
+            ]
+        }
+    }
+}

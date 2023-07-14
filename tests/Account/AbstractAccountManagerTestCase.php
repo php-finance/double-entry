@@ -84,6 +84,23 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         $accountManager->delete($accountIncomes);
     }
 
+    public function testDeleteWithChildrenAndNamedAccounts(): void
+    {
+        $accountIncomes = TestFactory::createAccount('acc1', name: 'Incomes');
+        $accountSalary = TestFactory::createAccount(
+            'salary',
+            parent: $accountIncomes
+        );
+        $accountRepository = $this->createAccountRepository($accountIncomes, $accountSalary);
+        $accountManager = $this->createAccountManager(
+            accountRepository: $accountRepository,
+        );
+
+        $this->expectException(AccountDeletionNotPossibleException::class);
+        $this->expectExceptionMessage('Deletion not possible, account "Incomes" has children.');
+        $accountManager->delete($accountIncomes);
+    }
+
     public function testDeleteWithPostings(): void
     {
         $account = TestFactory::createAccount('incomes');
@@ -100,6 +117,25 @@ abstract class AbstractAccountManagerTestCase extends TestCase
 
         $this->expectException(AccountDeletionNotPossibleException::class);
         $this->expectExceptionMessage('Deletion not possible, entries with account exists.');
+        $accountManager->delete($account);
+    }
+
+    public function testDeleteWithPostingsAndNamedAccounts(): void
+    {
+        $account = TestFactory::createAccount('acc1', name: 'Incomes');
+        $accountRepository = $this->createAccountRepository($account);
+        $accountManager = $this->createAccountManager(
+            accountRepository: $accountRepository,
+            postingRepository: $this->createPostingRepository(
+                TestFactory::createPosting(
+                    new EntryData($account),
+                    new EntryData($account),
+                ),
+            ),
+        );
+
+        $this->expectException(AccountDeletionNotPossibleException::class);
+        $this->expectExceptionMessage('Deletion not possible, entries with account "Incomes" exists.');
         $accountManager->delete($account);
     }
 

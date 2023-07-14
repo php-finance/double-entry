@@ -39,12 +39,18 @@ final class TransactionFactoryTest extends TestCase
                 new EntryData(TestFactory::createAccount('expenses')),
                 new EntryData(TestFactory::createAccount('wallet')),
             ),
+            new PostingData(
+                Money::of(300, 'IDR'),
+                new EntryData(TestFactory::createAccount('wallet')),
+                new EntryData(TestFactory::createAccount('incomes')),
+            ),
         );
 
         $this->assertSame('t1', $transaction->id->value);
         $this->assertSame($date->getTimestamp(), $transaction->getDate()->getTimestamp());
-        $this->assertSame([0, 1], array_keys($transaction->postings));
+        $this->assertSame([0, 1, 2], array_keys($transaction->postings));
         $this->assertSame('p1', $transaction->postings[0]->id->value);
         $this->assertSame('p2', $transaction->postings[1]->id->value);
+        $this->assertSame('p3', $transaction->postings[2]->id->value);
     }
 }
