@@ -13,6 +13,7 @@ use PhpFinance\DoubleEntry\Domain\Calculator\CalculatorInterface;
 use PhpFinance\DoubleEntry\Domain\Calculator\Filter;
 use PhpFinance\DoubleEntry\Domain\Posting\Factory\EntryData;
 use PhpFinance\DoubleEntry\Domain\Posting\Posting;
+use PhpFinance\DoubleEntry\Tests\Support\TestFactory;
 use PhpFinance\DoubleEntry\Tests\Support\TestTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -23,9 +24,9 @@ abstract class AbstractCalculatorTestCase extends TestCase
 
     public static function dataCalc(): array
     {
-        $incomesAccount = self::createAccount('incomes');
-        $expensesAccount = self::createAccount('expenses');
-        $walletAccount = self::createAccount('wallet');
+        $incomesAccount = TestFactory::createAccount('incomes');
+        $expensesAccount = TestFactory::createAccount('expenses');
+        $walletAccount = TestFactory::createAccount('wallet');
 
         return [
             'without-filter' => array_merge(
@@ -150,22 +151,22 @@ abstract class AbstractCalculatorTestCase extends TestCase
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
             [
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(100, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(150, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount),
                     amount: Money::of(30, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(25, 'USD'),
@@ -192,42 +193,42 @@ abstract class AbstractCalculatorTestCase extends TestCase
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
             [
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(100, 'RUB'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(150, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(30, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount),
                     amount: Money::of(71, 'RUB'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(22, 'RUB'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     amount: Money::of(500, 'IDR'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount),
                     amount: Money::of(15, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount),
                     amount: Money::of(7, 'USD'),
@@ -252,32 +253,32 @@ abstract class AbstractCalculatorTestCase extends TestCase
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
             [
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount, ['contractor' => 'John', 'priority' => 'High']),
                     new EntryData($incomesAccount),
                     amount: Money::of(100, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount, ['contractor' => 'John', 'priority' => 'Normal']),
                     new EntryData($incomesAccount),
                     amount: Money::of(90, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount, ['contractor' => 'John', 'priority' => 'High']),
                     new EntryData($incomesAccount),
                     amount: Money::of(5, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount, ['contractor' => 'John', 'priority' => 'High']),
                     amount: Money::of(30, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount, ['contractor' => 'Mike', 'priority' => 'High']),
                     new EntryData($incomesAccount),
                     amount: Money::of(150, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount, ['contractor' => 'John', 'priority' => 'Normal']),
                     amount: Money::of(10, 'USD'),
@@ -302,37 +303,37 @@ abstract class AbstractCalculatorTestCase extends TestCase
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
             [
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     date: new DateTimeImmutable('01.12.2020'),
                     amount: Money::of(100, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     date: new DateTimeImmutable('15.12.2020'),
                     amount: Money::of(90, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     date: new DateTimeImmutable('25.01.2021'),
                     amount: Money::of(5, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount),
                     date: new DateTimeImmutable('19.02.2021'),
                     amount: Money::of(30, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($walletAccount),
                     new EntryData($incomesAccount),
                     date: new DateTimeImmutable('21.02.2021'),
                     amount: Money::of(150, 'USD'),
                 ),
-                self::createPosting(
+                TestFactory::createPosting(
                     new EntryData($expensesAccount),
                     new EntryData($walletAccount),
                     date: new DateTimeImmutable('05.03.2021'),
