@@ -1,5 +1,13 @@
 # PHP Finance - Double Entry
 
+[![Latest Stable Version](https://poser.pugx.org/php-finance/double-entry/v/stable.png)](https://packagist.org/packages/php-finance/double-entry)
+[![Total Downloads](https://poser.pugx.org/php-finance/double-entry/downloads.png)](https://packagist.org/packages/php-finance/double-entry)
+[![Build status](https://github.com/php-finance/double-entry/workflows/build/badge.svg)](https://github.com/php-finance/double-entry/actions?query=workflow%3Abuild)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fphp-finance%2Fdouble-entry%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/php-finance/double-entry/master)
+[![type-coverage](https://shepherd.dev/github/php-finance/double-entry/coverage.svg)](https://shepherd.dev/github/php-finance/double-entry)
+[![static analysis](https://github.com/php-finance/double-entry/workflows/static%20analysis/badge.svg)](https://github.com/php-finance/double-entry/actions?query=workflow%3A%22static+analysis%22)
+[![psalm-level](https://shepherd.dev/github/php-finance/double-entry/level.svg)](https://shepherd.dev/github/php-finance/double-entry)
+
 [Double entry](https://en.wikipedia.org/wiki/Double-entry_bookkeeping) is an awesome proven approach to financial and analytical accounting. It allows doing accounting of any complexity.
 
 The library features are:
