@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpFinance\DoubleEntry\Tests\Support;
 
 use PhpFinance\DoubleEntry\Domain\Account\Account;
+use PhpFinance\DoubleEntry\Domain\Account\AccountFilter;
 use PhpFinance\DoubleEntry\Domain\Account\AccountId;
 use PhpFinance\DoubleEntry\Domain\Account\AccountRepositoryInterface;
 use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountNotFoundException;
@@ -31,6 +32,21 @@ final class InMemoryAccountRepository implements AccountRepositoryInterface
     public function get(AccountId $id): Account
     {
         return $this->accounts[$id->value] ?? throw new AccountNotFoundException();
+    }
+
+    public function find(AccountFilter $filter): array
+    {
+        return array_values(
+            array_filter(
+                $this->accounts,
+                static function (Account $account) use ($filter): bool {
+                    if ($filter->getAccountChartId() !== null && !$account->chartId->isEqualTo($filter->getAccountChartId())) {
+                        return false;
+                    }
+                    return true;
+                }
+            )
+        );
     }
 
     public function exists(AccountId $id): bool
