@@ -16,6 +16,12 @@ interface AccountRepositoryInterface
      */
     public function get(AccountId $id): Account;
 
+    /**
+     * @return Account[]
+     * @psalm-return list<Account>
+     */
+    public function find(AccountFilter $filter): array;
+
     public function exists(AccountId $id): bool;
 
     public function hasChildren(Account $account): bool;

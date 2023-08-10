@@ -21,6 +21,15 @@ final class AccountManager
         return $this->accountRepository->get($id);
     }
 
+    /**
+     * @return Account[]
+     * @psalm-return list<Account>
+     */
+    public function find(?AccountFilter $filter = null): array
+    {
+        return $this->accountRepository->find($filter ?? new AccountFilter());
+    }
+
     public function exists(AccountId $id): bool
     {
         return $this->accountRepository->exists($id);

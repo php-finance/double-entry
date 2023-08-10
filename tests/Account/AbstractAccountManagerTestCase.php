@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace PhpFinance\DoubleEntry\Tests\Account;
 
 use PhpFinance\DoubleEntry\Domain\Account\Account;
+use PhpFinance\DoubleEntry\Domain\Account\AccountChartId;
+use PhpFinance\DoubleEntry\Domain\Account\AccountFilter;
 use PhpFinance\DoubleEntry\Domain\Account\AccountId;
 use PhpFinance\DoubleEntry\Domain\Account\AccountManager;
 use PhpFinance\DoubleEntry\Domain\Account\AccountRepositoryInterface;
@@ -13,6 +15,7 @@ use PhpFinance\DoubleEntry\Domain\Posting\Factory\EntryData;
 use PhpFinance\DoubleEntry\Domain\Posting\Posting;
 use PhpFinance\DoubleEntry\Domain\Posting\PostingRepositoryInterface;
 use PhpFinance\DoubleEntry\Tests\Support\TestFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractAccountManagerTestCase extends TestCase
@@ -27,6 +30,58 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         $result = $accountManager->get(new AccountId('incomes'));
 
         $this->assertSame($result, $account);
+    }
+
+    public function testFind(): void
+    {
+        $accountManager = $this->createAccountManager(
+            accountRepository: $this->createAccountRepository(
+                TestFactory::createAccount('id1', 'chartA'),
+                TestFactory::createAccount('id2', 'chartB'),
+                TestFactory::createAccount('id3', 'chartA'),
+            ),
+        );
+
+        $resultAccountIds = array_map(
+            static fn(Account $account) => $account->id->value,
+            $accountManager->find(),
+        );
+
+        $this->assertSame(['id1', 'id2', 'id3'], $resultAccountIds);
+    }
+
+    public static function dataFindWithFilter(): array
+    {
+        return [
+            [['id1', 'id2', 'id3', 'id4', 'id5', 'id6', 'id7'], null],
+            [['id1', 'id2', 'id3', 'id4', 'id5', 'id6', 'id7'], new AccountFilter()],
+            [['id1', 'id3', 'id4', 'id7'], (new AccountFilter())->withAccountChartId(new AccountChartId('chartA'))],
+            [['id6'], (new AccountFilter())->withAccountChartId(new AccountChartId('chartC'))],
+            [[], (new AccountFilter())->withAccountChartId(new AccountChartId('chartNotExist'))],
+        ];
+    }
+
+    #[DataProvider('dataFindWithFilter')]
+    public function testFindWithFilter(array $expectedAccountIds, ?AccountFilter $filter): void
+    {
+        $accountManager = $this->createAccountManager(
+            accountRepository: $this->createAccountRepository(
+                TestFactory::createAccount('id1', 'chartA'),
+                TestFactory::createAccount('id2', 'chartB'),
+                TestFactory::createAccount('id3', 'chartA'),
+                TestFactory::createAccount('id4', 'chartA'),
+                TestFactory::createAccount('id5', 'chartB'),
+                TestFactory::createAccount('id6', 'chartC'),
+                TestFactory::createAccount('id7', 'chartA'),
+            ),
+        );
+
+        $resultAccountIds = array_map(
+            static fn(Account $account) => $account->id->value,
+            $accountManager->find($filter),
+        );
+
+        $this->assertSame($expectedAccountIds, $resultAccountIds);
     }
 
     public function testSave(): void
