@@ -40,10 +40,7 @@ final class InMemoryAccountRepository implements AccountRepositoryInterface
             array_filter(
                 $this->accounts,
                 static function (Account $account) use ($filter): bool {
-                    if ($filter->getAccountChartId() !== null && !$account->chartId->isEqualTo($filter->getAccountChartId())) {
-                        return false;
-                    }
-                    return true;
+                    return $filter->getAccountChartId() === null || $account->chartId->isEqualTo($filter->getAccountChartId());
                 }
             )
         );
