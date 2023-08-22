@@ -15,7 +15,7 @@ use function array_key_exists;
 final readonly class Entry
 {
     /**
-     * Don't run directly, use {@see PostingFactory} instead of.
+     * Don't run directly, use {@see PostingFactory} instead.
      */
     public function __construct(
         public DateTimeImmutable $date,
