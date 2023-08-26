@@ -14,7 +14,7 @@ final readonly class Transaction
      * @param Posting[] $postings
      * @psalm-param non-empty-list<Posting> $postings
      *
-     * Don't run directly, use {@see TransactionFactory} instead of.
+     * Don't run directly, use {@see TransactionFactory} instead.
      */
     public function __construct(
         public TransactionId $id,

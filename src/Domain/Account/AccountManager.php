@@ -65,14 +65,14 @@ final class AccountManager
         if ($this->accountRepository->hasChildren($account)) {
             $name = $account->getName();
             throw new AccountDeletionNotPossibleException(
-                'Deletion not possible, account' . ($name !== null ? ' "' . $name . '"' : '') . ' has children.',
+                'Deletion isn\'t possible, account' . ($name !== null ? ' "' . $name . '"' : '') . ' has children.',
             );
         }
 
         if ($this->postingRepository->existsWithAccount($account)) {
             $name = $account->getName();
             throw new AccountDeletionNotPossibleException(
-                'Deletion not possible, entries with account' . ($name !== null ? ' "' . $name . '"' : '') . ' exists.',
+                'Deletion isn\'t possible, entries with account' . ($name !== null ? ' "' . $name . '"' : '') . ' exists.',
             );
         }
 
