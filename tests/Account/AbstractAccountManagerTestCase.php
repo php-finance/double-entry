@@ -152,7 +152,7 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         );
 
         $this->expectException(AccountDeletionNotPossibleException::class);
-        $this->expectExceptionMessage('Deletion not possible, account has children.');
+        $this->expectExceptionMessage('Deletion isn\'t possible, account has children.');
         $accountManager->delete($accountIncomes);
     }
 
@@ -169,7 +169,7 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         );
 
         $this->expectException(AccountDeletionNotPossibleException::class);
-        $this->expectExceptionMessage('Deletion not possible, account "Incomes" has children.');
+        $this->expectExceptionMessage('Deletion isn\'t possible, account "Incomes" has children.');
         $accountManager->delete($accountIncomes);
     }
 
@@ -188,7 +188,7 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         );
 
         $this->expectException(AccountDeletionNotPossibleException::class);
-        $this->expectExceptionMessage('Deletion not possible, entries with account exists.');
+        $this->expectExceptionMessage('Deletion isn\'t possible, entries with account exists.');
         $accountManager->delete($account);
     }
 
@@ -207,7 +207,7 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         );
 
         $this->expectException(AccountDeletionNotPossibleException::class);
-        $this->expectExceptionMessage('Deletion not possible, entries with account "Incomes" exists.');
+        $this->expectExceptionMessage('Deletion isn\'t possible, entries with account "Incomes" exists.');
         $accountManager->delete($account);
     }
 
