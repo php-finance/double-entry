@@ -13,7 +13,7 @@ final class InMemoryCalculatorTest extends AbstractCalculatorTestCase
     protected function createCalculator(array $accounts, array $postings): CalculatorInterface
     {
         return new InMemoryCalculator(
-            new InMemoryPostingRepository($postings)
+            new InMemoryPostingRepository($postings),
         );
     }
 }

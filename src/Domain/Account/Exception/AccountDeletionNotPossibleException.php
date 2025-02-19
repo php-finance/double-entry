@@ -6,6 +6,4 @@ namespace PhpFinance\DoubleEntry\Domain\Account\Exception;
 
 use RuntimeException;
 
-final class AccountDeletionNotPossibleException extends RuntimeException
-{
-}
+final class AccountDeletionNotPossibleException extends RuntimeException {}

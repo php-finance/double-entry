@@ -6,6 +6,4 @@ namespace PhpFinance\DoubleEntry\Domain\Posting\Exception;
 
 use RuntimeException;
 
-final class PostingNotFoundException extends RuntimeException
-{
-}
+final class PostingNotFoundException extends RuntimeException {}

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 final class Account
 {
-    private const NAME_CHARS_LIMIT = 50;
+    private const int NAME_CHARS_LIMIT = 50;
 
     /**
      * @psalm-var non-empty-string|null
@@ -62,8 +62,8 @@ final class Account
                 throw new InvalidArgumentException(
                     sprintf(
                         'Account name must be null or non-empty string no greater than %d symbols.',
-                        self::NAME_CHARS_LIMIT
-                    )
+                        self::NAME_CHARS_LIMIT,
+                    ),
                 );
             }
             /** @psalm-var non-empty-string $name */

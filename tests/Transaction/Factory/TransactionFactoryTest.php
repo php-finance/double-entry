@@ -23,7 +23,7 @@ final class TransactionFactoryTest extends TestCase
             (new TestTransactionIdFactory())->setStrings('t1', 't2', 't3'),
             new PostingFactory(
                 (new TestPostingIdFactory())->setStrings('p1', 'p2', 'p3'),
-            )
+            ),
         );
 
         $date = new DateTimeImmutable('10.05.2006');

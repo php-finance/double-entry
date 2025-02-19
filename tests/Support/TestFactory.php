@@ -9,12 +9,9 @@ use DateTimeImmutable;
 use PhpFinance\DoubleEntry\Domain\Account\Account;
 use PhpFinance\DoubleEntry\Domain\Account\AccountChartId;
 use PhpFinance\DoubleEntry\Domain\Account\AccountId;
-use PhpFinance\DoubleEntry\Domain\Account\AccountManager;
-use PhpFinance\DoubleEntry\Domain\Account\AccountRepositoryInterface;
 use PhpFinance\DoubleEntry\Domain\Posting\Factory\EntryData;
 use PhpFinance\DoubleEntry\Domain\Posting\Factory\PostingFactory;
 use PhpFinance\DoubleEntry\Domain\Posting\Posting;
-use PhpFinance\DoubleEntry\Domain\Posting\PostingRepositoryInterface;
 
 final class TestFactory
 {
@@ -56,7 +53,7 @@ final class TestFactory
         ?Money $amount = null,
     ): Posting {
         $factory = new PostingFactory(
-            self::createPostingIdFactory($id === null ? [] : [$id])
+            self::createPostingIdFactory($id === null ? [] : [$id]),
         );
 
         return $factory->create(

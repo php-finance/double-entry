@@ -8,13 +8,12 @@ use DateTimeImmutable;
 use PhpFinance\DoubleEntry\Domain\Posting\Factory\PostingFactory;
 use PhpFinance\DoubleEntry\Domain\Transaction\Transaction;
 
-final class TransactionFactory
+final readonly class TransactionFactory
 {
     public function __construct(
         private TransactionIdFactoryInterface $transactionIdFactory,
         private PostingFactory $postingFactory,
-    ) {
-    }
+    ) {}
 
     public function create(
         DateTimeImmutable $date,

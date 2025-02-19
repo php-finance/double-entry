@@ -41,8 +41,8 @@ final class InMemoryAccountRepository implements AccountRepositoryInterface
                 $this->accounts,
                 static function (Account $account) use ($filter): bool {
                     return $filter->getAccountChartId() === null || $account->chartId->isEqualTo($filter->getAccountChartId());
-                }
-            )
+                },
+            ),
         );
     }
 

@@ -19,8 +19,7 @@ final readonly class Transaction
     public function __construct(
         public TransactionId $id,
         public array $postings,
-    ) {
-    }
+    ) {}
 
     public function getDate(): DateTimeImmutable
     {

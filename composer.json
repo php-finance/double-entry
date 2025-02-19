@@ -20,9 +20,11 @@
         "brick/money": "^0.10.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.69",
+        "infection/infection": "^0.29.12",
         "maglnet/composer-require-checker": "^4.16.1",
         "phpunit/phpunit": "^12.0.3",
-        "infection/infection": "^0.29.12",
+        "rector/rector": "^2.0",
         "vimeo/psalm": "^6.8"
     },
     "config": {
@@ -33,6 +35,8 @@
         }
     },
     "scripts": {
-        "infection": "infection --ignore-msi-with-no-mutations --only-covered"
+        "php-cs-fixer": "php-cs-fixer fix",
+        "infection": "infection --ignore-msi-with-no-mutations --only-covered",
+        "rector": "rector"
     }
 }

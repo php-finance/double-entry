@@ -31,7 +31,7 @@ final class TransactionTest extends TestCase
                     'id2',
                     $date,
                 ),
-            ]
+            ],
         );
 
         $this->assertSame('7', $transaction->id->value);

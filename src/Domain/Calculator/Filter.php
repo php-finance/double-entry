@@ -18,8 +18,7 @@ final class Filter
         private ?DateTimeImmutable $dateFrom = null,
         private ?DateTimeImmutable $dateTo = null,
         private array $currencies = [],
-    ) {
-    }
+    ) {}
 
     public function getDimensions(): array
     {

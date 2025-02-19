@@ -14,8 +14,7 @@ final readonly class InMemoryCalculator implements CalculatorInterface
 {
     public function __construct(
         private InMemoryPostingRepository $postingRepository,
-    ) {
-    }
+    ) {}
 
     public function debit(Account $account, ?Filter $filter = null): MoneyBag
     {
