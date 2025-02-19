@@ -10,12 +10,11 @@ use InvalidArgumentException;
 use PhpFinance\DoubleEntry\Domain\Posting\Entry;
 use PhpFinance\DoubleEntry\Domain\Posting\Posting;
 
-final class PostingFactory
+final readonly class PostingFactory
 {
     public function __construct(
         private PostingIdFactoryInterface $postingIdFactory,
-    ) {
-    }
+    ) {}
 
     public function create(
         DateTimeImmutable $date,
@@ -40,7 +39,7 @@ final class PostingFactory
                 $amount,
                 $creditData->account->id,
                 $creditData->dimensions,
-            )
+            ),
         );
     }
 }

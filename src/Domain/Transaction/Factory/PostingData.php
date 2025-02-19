@@ -13,6 +13,5 @@ final readonly class PostingData
         public Money $amount,
         public EntryData $debitData,
         public EntryData $creditData,
-    ) {
-    }
+    ) {}
 }

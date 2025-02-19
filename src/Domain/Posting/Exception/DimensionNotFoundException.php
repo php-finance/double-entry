@@ -13,8 +13,8 @@ final class DimensionNotFoundException extends LogicException
         parent::__construct(
             sprintf(
                 'Entry does not have dimension "%s".',
-                $name
-            )
+                $name,
+            ),
         );
     }
 }

@@ -7,9 +7,8 @@ namespace PhpFinance\DoubleEntry\Domain\Posting;
 final readonly class PostingId
 {
     public function __construct(
-        public string $value
-    ) {
-    }
+        public string $value,
+    ) {}
 
     public function isEqualTo(PostingId $id): bool
     {

@@ -22,8 +22,7 @@ final readonly class Entry
         public Money $amount,
         public AccountId $accountId,
         private array $dimensions = [],
-    ) {
-    }
+    ) {}
 
     /**
      * @throws DimensionNotFoundException

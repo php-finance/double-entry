@@ -144,7 +144,7 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         $accountIncomes = TestFactory::createAccount('incomes');
         $accountSalary = TestFactory::createAccount(
             'salary',
-            parent: $accountIncomes
+            parent: $accountIncomes,
         );
         $accountRepository = $this->createAccountRepository($accountIncomes, $accountSalary);
         $accountManager = $this->createAccountManager(
@@ -161,7 +161,7 @@ abstract class AbstractAccountManagerTestCase extends TestCase
         $accountIncomes = TestFactory::createAccount('acc1', name: 'Incomes');
         $accountSalary = TestFactory::createAccount(
             'salary',
-            parent: $accountIncomes
+            parent: $accountIncomes,
         );
         $accountRepository = $this->createAccountRepository($accountIncomes, $accountSalary);
         $accountManager = $this->createAccountManager(

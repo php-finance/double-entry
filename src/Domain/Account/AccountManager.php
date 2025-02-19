@@ -7,14 +7,13 @@ namespace PhpFinance\DoubleEntry\Domain\Account;
 use PhpFinance\DoubleEntry\Domain\Account\Exception\AccountDeletionNotPossibleException;
 use PhpFinance\DoubleEntry\Domain\Posting\PostingRepositoryInterface;
 
-final class AccountManager
+final readonly class AccountManager
 {
     public function __construct(
-        private readonly AccountRepositoryInterface $accountRepository,
-        private readonly AccountIdFactoryInterface $accountIdFactory,
-        private readonly PostingRepositoryInterface $postingRepository,
-    ) {
-    }
+        private AccountRepositoryInterface $accountRepository,
+        private AccountIdFactoryInterface $accountIdFactory,
+        private PostingRepositoryInterface $postingRepository,
+    ) {}
 
     public function get(AccountId $id): Account
     {

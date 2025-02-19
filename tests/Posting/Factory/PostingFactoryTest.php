@@ -27,7 +27,7 @@ final class PostingFactoryTest extends TestCase
     #[DataProvider('dataCreateWithDifferentAccountCharts')]
     public function testCreateWithDifferentAccountCharts(
         ?string $debitAccountChartId,
-        ?string $creditAccountChartId
+        ?string $creditAccountChartId,
     ): void {
         $factory = new PostingFactory(
             TestFactory::createPostingIdFactory(),

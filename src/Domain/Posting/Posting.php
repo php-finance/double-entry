@@ -16,9 +16,8 @@ final readonly class Posting
     public function __construct(
         public PostingId $id,
         public Entry $debit,
-        public Entry $credit
-    ) {
-    }
+        public Entry $credit,
+    ) {}
 
     public function getDate(): DateTimeImmutable
     {

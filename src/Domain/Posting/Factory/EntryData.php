@@ -11,6 +11,5 @@ final readonly class EntryData
     public function __construct(
         public Account $account,
         public array $dimensions = [],
-    ) {
-    }
+    ) {}
 }

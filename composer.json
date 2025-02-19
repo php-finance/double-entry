@@ -15,20 +15,28 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.2",
+        "php": "~8.3.0 || ~8.4.0",
         "ext-mbstring": "*",
-        "brick/money": "^0.8.0"
+        "brick/money": "^0.10.0"
     },
     "require-dev": {
-        "maglnet/composer-require-checker": "^4.6",
-        "phpunit/phpunit": "^10.2",
-        "roave/infection-static-analysis-plugin": "^1.32",
-        "vimeo/psalm": "^5.13"
+        "friendsofphp/php-cs-fixer": "^3.69",
+        "infection/infection": "^0.29.12",
+        "maglnet/composer-require-checker": "^4.16.1",
+        "phpunit/phpunit": "^12.0.3",
+        "rector/rector": "^2.0",
+        "vimeo/psalm": "^6.8"
     },
     "config": {
         "sort-packages": true,
+        "bump-after-update": "dev",
         "allow-plugins": {
             "infection/extension-installer": false
         }
+    },
+    "scripts": {
+        "php-cs-fixer": "php-cs-fixer fix",
+        "infection": "infection --ignore-msi-with-no-mutations --only-covered",
+        "rector": "rector"
     }
 }

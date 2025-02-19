@@ -23,7 +23,7 @@ final class PostingTest extends TestCase
             new EntryData(TestFactory::createAccount('incomes'), ['type' => 'salary']),
             '7',
             $date,
-            $amount
+            $amount,
         );
 
         // Posting

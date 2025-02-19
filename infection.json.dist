@@ -14,5 +14,6 @@
                 "PhpFinance\\DoubleEntry\\Domain\\Transaction\\Transaction::getDate"
             ]
         }
-    }
+    },
+    "minCoveredMsi": 100
 }

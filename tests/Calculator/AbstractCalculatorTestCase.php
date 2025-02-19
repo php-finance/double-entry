@@ -36,7 +36,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(30, 'USD')), // 30
                     (new MoneyBag())->add(Money::of(245, 'USD')), // 100 + 150 - 30 + 25
                     $walletAccount,
-                ]
+                ],
             ),
             'filter-by-one-currency' => array_merge(
                 self::createData2($incomesAccount, $expensesAccount, $walletAccount),
@@ -45,8 +45,8 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(71, 'RUB')), // 30
                     (new MoneyBag())->add(Money::of(51, 'RUB')),
                     $walletAccount,
-                    new Filter(currencies: [Currency::of('RUB')])
-                ]
+                    new Filter(currencies: [Currency::of('RUB')]),
+                ],
             ),
             'filter-by-two-currency' => array_merge(
                 self::createData2($incomesAccount, $expensesAccount, $walletAccount),
@@ -55,8 +55,8 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(71, 'RUB'))->add(Money::of(22, 'USD')),
                     (new MoneyBag())->add(Money::of(51, 'RUB'))->add(Money::of(158, 'USD')),
                     $walletAccount,
-                    new Filter(currencies: [Currency::of('RUB'), Currency::of('USD')])
-                ]
+                    new Filter(currencies: [Currency::of('RUB'), Currency::of('USD')]),
+                ],
             ),
             'filter-by-one-dimension' => array_merge(
                 self::createData3($incomesAccount, $expensesAccount, $walletAccount),
@@ -66,7 +66,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(155, 'USD')),
                     $walletAccount,
                     new Filter(dimensions: ['contractor' => 'John']),
-                ]
+                ],
             ),
             'filter-by-two-dimensions' => array_merge(
                 self::createData3($incomesAccount, $expensesAccount, $walletAccount),
@@ -76,7 +76,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(75, 'USD')),
                     $walletAccount,
                     new Filter(dimensions: ['contractor' => 'John', 'priority' => 'High']),
-                ]
+                ],
             ),
             'filter-by-date-from' => array_merge(
                 self::createData4($incomesAccount, $expensesAccount, $walletAccount),
@@ -86,7 +86,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(165, 'USD')),
                     $walletAccount,
                     new Filter(dateTo: new DateTimeImmutable('20.02.2021')),
-                ]
+                ],
             ),
             'filter-by-date-to' => array_merge(
                 self::createData4($incomesAccount, $expensesAccount, $walletAccount),
@@ -96,7 +96,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     (new MoneyBag())->add(Money::of(115, 'USD')),
                     $walletAccount,
                     new Filter(dateFrom: new DateTimeImmutable('01.01.2021')),
-                ]
+                ],
             ),
             'filter-by-date-period' => array_merge(
                 self::createData4($incomesAccount, $expensesAccount, $walletAccount),
@@ -107,9 +107,9 @@ abstract class AbstractCalculatorTestCase extends TestCase
                     $walletAccount,
                     new Filter(
                         dateFrom: new DateTimeImmutable('01.01.2021'),
-                        dateTo: new DateTimeImmutable('27.02.2021')
+                        dateTo: new DateTimeImmutable('27.02.2021'),
                     ),
-                ]
+                ],
             ),
         ];
     }
@@ -122,7 +122,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
         MoneyBag $expectedCredit,
         MoneyBag $expectedBalance,
         Account $account,
-        ?Filter $filter = null
+        ?Filter $filter = null,
     ): void {
         $calculator = $this->createCalculator($accounts, $postings);
 
@@ -146,7 +146,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
     private static function createData1(
         Account $incomesAccount,
         Account $expensesAccount,
-        Account $walletAccount
+        Account $walletAccount,
     ): array {
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
@@ -188,7 +188,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
     private static function createData2(
         Account $incomesAccount,
         Account $expensesAccount,
-        Account $walletAccount
+        Account $walletAccount,
     ): array {
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
@@ -248,7 +248,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
     private static function createData3(
         Account $incomesAccount,
         Account $expensesAccount,
-        Account $walletAccount
+        Account $walletAccount,
     ): array {
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],
@@ -298,7 +298,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
     private static function createData4(
         Account $incomesAccount,
         Account $expensesAccount,
-        Account $walletAccount
+        Account $walletAccount,
     ): array {
         return [
             [$incomesAccount, $expensesAccount, $walletAccount],

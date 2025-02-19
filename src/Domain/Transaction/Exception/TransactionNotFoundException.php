@@ -6,6 +6,4 @@ namespace PhpFinance\DoubleEntry\Domain\Transaction\Exception;
 
 use RuntimeException;
 
-final class TransactionNotFoundException extends RuntimeException
-{
-}
+final class TransactionNotFoundException extends RuntimeException {}
