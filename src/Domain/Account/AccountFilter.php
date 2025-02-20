@@ -6,7 +6,9 @@ namespace PhpFinance\DoubleEntry\Domain\Account;
 
 final class AccountFilter
 {
-    private ?AccountChartId $accountChartId = null;
+    public function __construct(
+        private ?AccountChartId $accountChartId = null,
+    ) {}
 
     public function getAccountChartId(): ?AccountChartId
     {
