@@ -33,22 +33,13 @@ final class AccountTest extends TestCase
         $this->assertSame($name, $account->getName());
     }
 
-    public static function dataInvalidRename(): array
-    {
-        return [
-            'empty-string' => [''],
-            'long-string' => [str_repeat('.', 51)],
-        ];
-    }
-
-    #[DataProvider('dataInvalidRename')]
-    public function testInvalidRename(string $name): void
+    public function testRenameToEmptyString(): void
     {
         $account = TestFactory::createAccount();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Account name must be null or non-empty string no greater than 50 symbols.');
-        $account->rename($name);
+        $this->expectExceptionMessage('Account name must be null or non-empty string.');
+        $account->rename('');
     }
 
     public function testCreateAccountWithParentFromAnotherChart(): void

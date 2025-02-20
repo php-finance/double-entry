@@ -8,8 +8,6 @@ use InvalidArgumentException;
 
 final class Account
 {
-    private const int NAME_CHARS_LIMIT = 50;
-
     /**
      * @psalm-var non-empty-string|null
      */
@@ -51,22 +49,10 @@ final class Account
         $this->setName($name);
     }
 
-    /**
-     * @pslam-param non-empty-string|null $name
-     */
     private function setName(?string $name): void
     {
-        if ($name !== null) {
-            $length = mb_strlen($name);
-            if ($length === 0 || $length > self::NAME_CHARS_LIMIT) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'Account name must be null or non-empty string no greater than %d symbols.',
-                        self::NAME_CHARS_LIMIT,
-                    ),
-                );
-            }
-            /** @psalm-var non-empty-string $name */
+        if ($name === '') {
+            throw new InvalidArgumentException('Account name must be null or non-empty string.');
         }
 
         $this->name = $name;
